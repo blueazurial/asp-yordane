@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WebApplication1.Models.DishDetailsModel>
+
+@foreach (WebApplication1.Models.DishDetailsModel item in Model)
+{
+    <th>
+        <td>
+            @item.Id
+        </td>
+    
+        <td>
+            @item.Picture
+        </td>
+    
+        <td>
+            @item.Name
+        </td>
+    
+        <td>
+            @item.Category.Name
+        </td>
+    
+        <td>
+            @item.Price
+        </td>
+    
+        <td>
+            @item.Discount
+        </td>
+   
+        <td>
+            @item.PriceWithDiscount
+        </td>
+    </th>
+}

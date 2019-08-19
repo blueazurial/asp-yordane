@@ -1,0 +1,80 @@
+﻿@model WebApplication1.Models.SearchFormModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>SearchFormModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.NameSushi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NameSushi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NameSushi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <select multiple name="PickedCategories">
+                @foreach (DAL.Entities.Category item in Model.AllCategories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                    
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="send" type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div id="results">
+
+</div>
+
+@section scripts{
+    <script>
+        function AjaxFunc(event) {
+            event.preventDefault();
+            let form = document.querySelector("form");
+            let results = document.getElementById("results");
+            $.ajax({
+                //url a contacter
+                url: "@Url.Action("AjaxSearch", "Dish")",
+                //verb http à utiliser
+                method: "POST",
+                //donnée à envoyer
+                data: $(form).serialize(),
+                //type de donnée
+                dataType: "HTML",
+                //methode a executer en cas de succes
+                success: function (data) {
+                    results.innerHTML = data;
+                },
+                //methode en cas d'echec
+                error: function (error) { console.log(error); },
+
+            });
+        }
+        $(document).ready(function(){
+            $('select').formSelect();
+        
+            let btn = document.getElementById("send");
+            
+            btn.addEventListener("click", AjaxFunc);
+            let select = document.querySelector("select");
+            select.addEventListener("change", AjaxFunc);
+        });
+    </script>
+}

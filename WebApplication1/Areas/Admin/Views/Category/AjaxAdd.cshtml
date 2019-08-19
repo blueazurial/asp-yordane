@@ -1,0 +1,16 @@
+﻿
+        @foreach (WebApplication1.Areas.Admin.Models.CategoryModel item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    <a href='@Url.Action("Delete", "Category")/@item.Id'><input type="button" value="Delete" /></a>
+                </td>
+            </tr>
+        }
+

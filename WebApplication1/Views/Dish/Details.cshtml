@@ -1,0 +1,53 @@
+﻿@model WebApplication1.Models.DishDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Html.DisplayFor(model  => model.Name)</h2>
+
+<div>
+    
+    <dl class="dl-horizontal">
+        <dt>
+            Nom
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Prix
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        @if (Model.Discount.HasValue)
+        {
+            <dt>
+                Promo
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Discount) %
+            </dd>
+            <dt>
+                Nouveau prix
+            </dt>
+
+            <dd>
+                @(Model.Price - Model.Price * Model.Discount / 100) €
+            </dd>
+
+        }
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WebApplication1.Models.DishDetailsModel>
+
+
+@foreach (WebApplication1.Models.DishDetailsModel item in Model) {
+<div class="col s12 m4">
+    <div class="card">
+        <div class="card-image">
+
+            <img src="../Content/Image/@item.Picture" />
+            <span class="card-title">@item.Name</span>
+
+        </div>
+        <div class="card-content">
+            @if (item.Discount != null)
+            {
+                <p style="text-decoration: line-through">@item.Price €</p>
+                <p>@(item.PriceWithDiscount) €</p>
+            }
+            else
+            {
+                <p>@item.Price €</p>
+            }
+        </div>
+        <div class="card-action">
+            <a href="@Url.Action("Details", "Dish")/@item.Id">Acheter</a>
+        </div>
+    </div>
+</div>
+}
+

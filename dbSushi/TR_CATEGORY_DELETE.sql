@@ -1,0 +1,13 @@
+﻿CREATE TRIGGER [TR_CATEGORY_DELETE]
+ON [dbo].[Category]
+INSTEAD OF DELETE
+AS
+BEGIN
+	SET NOCOUNT ON
+	UPDATE Category
+	SET Deleted = 1
+	WHERE Id IN (SELECT id FROM deleted)
+
+	UPDATE Dish SET Deleted = 1
+	WHERE CategoryId IN (SELECT Id FROM deleted)
+END

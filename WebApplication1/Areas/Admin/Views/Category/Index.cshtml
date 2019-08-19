@@ -1,0 +1,67 @@
+﻿@model WebApplication1.Areas.Admin.Models.CategoryModel
+
+<div class="col s12 m4">
+    <div id="ajaxAdd">
+        <div class="form-group">
+            <form >
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="button" value="Add" id="send" />
+            </form>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        Quantity
+                    </td>
+                    <td>
+                        Delete
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="results">
+                @Html.Action("AjaxAdd", "Category")
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</div>
+
+@section scripts{
+    <script>
+        function AjaxFunc(event) {
+            event.preventDefault();
+            let results = document.getElementById("results");
+            //console.log($(renvois).serialize())
+            $.ajax({
+                //url a contacter
+                url: "@Url.Action("AjaxAdd", "Category")",
+                //verb http à utiliser
+                method: "POST",
+                //donnée à envoyer
+                data: $("form").serialize(),
+                //type de donnée
+                dataType: "HTML",
+                //methode a executer en cas de succes
+                success: function (data) {
+                    results.innerHTML = data;
+                },
+                //methode en cas d'echec
+                error: function (error) { console.log(error); },
+
+            });
+        }
+        $(document).ready(function(){
+
+            let btn = document.getElementById("send");
+
+            btn.addEventListener("click", AjaxFunc);
+        });
+    </script>
+}

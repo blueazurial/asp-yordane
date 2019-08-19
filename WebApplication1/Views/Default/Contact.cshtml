@@ -1,0 +1,30 @@
+﻿@model WebApplication1.Models.ContactFormModel
+@{
+    ViewBag.Title = "Contact";
+}
+@* action="#" signifie que l'url courante traitera le formulaire *@
+<div class="row">
+    <form action="#" method="post" class="col s12">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="input-field col s6">
+                @Html.EditorFor(m => m.AuthorEmail)
+                <label for="first_name">Your Email Address</label>
+                <span class="red-text">@Html.ValidationMessageFor(m => m.AuthorEmail)</span>
+            </div>
+            <div class="input-field col s6">
+                @Html.EditorFor(m => m.Object)
+                <label for="first_name">Subject</label>
+                <span class="red-text">@Html.ValidationMessageFor(m => m.Object)</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                @Html.TextAreaFor(m => m.Content, new { @class = "materialize-textarea col s12", width ="100%" })
+                <label for="textarea1">Your Message</label>
+                <span class="red-text">@Html.ValidationMessageFor(m => m.Content)</span>
+            </div>
+        </div>
+        <input type="submit" class="btn wave-effect teal" value="Envoyer" />
+    </form>
+</div>
